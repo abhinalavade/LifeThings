@@ -1,0 +1,15 @@
+# Use a lightweight OpenJDK base image
+FROM openjdk:17-jdk-slim
+
+# Set the working directory inside the container
+WORKDIR /app
+
+# Copy your compiled JAR file into the container
+# Replace "lifethings_runnable.jar" with the exact name of your JAR file
+COPY lifethings_runnable.jar app.jar
+
+# Expose the port your Java application listens on (Render uses 10000 by default)
+EXPOSE 10000
+
+# Tell Java to run your application on Render's specified port
+CMD ["java", "-jar", "app.jar", "--server.port=10000"]
