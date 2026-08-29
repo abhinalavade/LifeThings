@@ -22,8 +22,8 @@ defmodule LifeThings.MixProject do
   defp deps do # Fixed: changed 'def p deps do' to 'defp deps do'
     [
       # Add your dependencies here, for example:
-      # {:phoenix, "~> 1.7.0"},
-      # {:jason, "~> 1.4"}
+       {:phoenix, "~> 1.7.0"},
+       {:jason, "~> 1.4"}
     ]
   end
 end
