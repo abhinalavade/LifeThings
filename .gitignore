@@ -1,0 +1,15 @@
+# Compiled agility class files
+*.class
+*.log
+
+# Build directories
+target/
+build/
+.gradle/
+
+# IDE specific files
+.idea/
+*.iml
+.settings/
+.classpath
+.project
