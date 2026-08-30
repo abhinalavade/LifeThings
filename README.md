@@ -1,1 +1,8 @@
-Life things to see and go and handle
+# Java Project
+
+## Prerequisites
+Java JDK 17
+
+## How to Run
+mvn clean package
+
