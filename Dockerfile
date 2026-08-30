@@ -1,10 +1,6 @@
-FROM eclipse-temurin:17-jdk-alpine AS build
+FROM eclipse-temurin:17-jdk-alpine
 WORKDIR /app
 COPY . .
-RUN ./mvnw package  # or use gradle/ant depending on your build tool
-
-FROM eclipse-temurin:17-jre-alpine
-WORKDIR /app
-COPY --from=build /app/target/*.jar app.jar
+RUN ./gradlew build  # or 'mvn clean package' if using Maven
 EXPOSE 8080
-ENTRYPOINT ["java", "-jar", "app.jar"]
+CMD ["java", "-jar", "build/libs/lifethings_runnable.jar"] # update with your jar path
