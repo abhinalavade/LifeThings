@@ -1,21 +1,10 @@
-# --- Stage 1: Build ---
-FROM elixir:1.17-alpine AS builder
-RUN apk add --no-cache build-base git
+FROM eclipse-temurin:17-jdk-alpine AS build
 WORKDIR /app
-RUN mix local.hex --force && mix local.rebar --force
-ENV MIX_ENV=prod
-COPY mix.exs mix.lock ./
-RUN mix deps.get --only prod && mix deps.compile
-COPY config ./config
-COPY lib ./lib
-RUN mix compile && mix release
+COPY . .
+RUN ./mvnw package  # or use gradle/ant depending on your build tool
 
-# --- Stage 2: Runner ---
-FROM alpine:3.20 AS runner
-RUN apk add --no-cache libstdc++ openssl ncurses-libs
+FROM eclipse-temurin:17-jre-alpine
 WORKDIR /app
-RUN adduser -D elixiruser
-USER elixiruser
-COPY --from=builder --chown=elixiruser:elixiruser /app/_build/prod/rel/my_app ./
-ENV HOME=/app
-CMD ["./bin/my_app", "start"]
+COPY --from=build /app/target/*.jar app.jar
+EXPOSE 8080
+ENTRYPOINT ["java", "-jar", "app.jar"]
