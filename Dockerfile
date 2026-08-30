@@ -1,6 +1,7 @@
-FROM eclipse-temurin:17-jdk-alpine
+FROM eclipse-temurin:17-jre-alpine
 WORKDIR /app
-COPY . .
-RUN ./gradlew build  # or 'mvn clean package' if using Maven
+# Replace 'your-app-name.jar' with your actual compiled jar file name
+COPY target/handlethings_runnable.jar app.jar 
 EXPOSE 8080
-CMD ["java", "-jar", "build/libs/lifethings_runnable.jar"] # update with your jar path
+ENTRYPOINT ["java", "-jar", "app.jar"]
+
